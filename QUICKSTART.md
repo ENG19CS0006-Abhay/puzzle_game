@@ -41,7 +41,7 @@ This installs:
 ### Step 2: Verify Environment Variables
 Check that `.env` file contains:
 ```env
-GROQ_API_KEY=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
+GROQ_API_KEY=YOUR_GROQ_API_KEY
 NODE_ENV=development
 PORT=3001
 ```
