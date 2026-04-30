@@ -14,7 +14,9 @@ export class GroqService {
 
   async generatePuzzle(difficulty: 'easy' | 'medium' | 'hard'): Promise<string> {
     const size = difficulty === 'easy' ? 3 : difficulty === 'medium' ? 4 : 5;
-    const prompt = `Generate a noir murder mystery puzzle JSON.
+    const prompt = `You are creating a murder mystery case for Detective Jency Infentica, a brilliant finance expert who left Wall Street to solve crimes. She has an exceptional eye for detail and logical prowess.
+
+Generate a noir murder mystery puzzle JSON.
     Return ONLY JSON.
     Structure: { 
       "title": "...", 

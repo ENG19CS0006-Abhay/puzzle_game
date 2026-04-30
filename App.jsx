@@ -1,7 +1,13 @@
 import React, { useState } from 'react';
 import { Skull, Fingerprint, ShieldAlert, AlertTriangle, Trophy, Loader, ChevronRight, ArrowLeft, RefreshCw } from 'lucide-react';
 
-const API_BASE_URL = 'http://localhost:3001/api/puzzles';
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api/puzzles';
+
+const DETECTIVE = {
+  name: 'Jency Infentica',
+  title: 'Finance Expert Turned Detective',
+  bio: 'Once a renowned financial analyst, Jency Infentica left Wall Street to pursue her true passion: solving murder mysteries. Her sharp analytical mind and attention to detail make her the precinct\'s most brilliant detective.',
+};
 
 const shuffleArray = (array) => {
   if (!array || !Array.isArray(array)) return [];
@@ -119,7 +125,12 @@ export default function App() {
         <h1 className="text-6xl md:text-8xl font-black mb-4 italic tracking-tighter text-center uppercase">
           CRIME <span className="text-rose-700">SCENE</span> AI
         </h1>
-        <p className="text-zinc-500 uppercase tracking-[0.6em] mb-12 text-[10px] font-bold">Noir Logical Deduction</p>
+        <p className="text-zinc-500 uppercase tracking-[0.6em] mb-2 text-[10px] font-bold">Noir Logical Deduction</p>
+        
+        <div className="mb-12 text-center">
+          <p className="text-rose-500 font-black text-sm uppercase tracking-widest mb-1">{DETECTIVE.name}</p>
+          <p className="text-zinc-400 text-[11px] italic">{DETECTIVE.title}</p>
+        </div>
         
         {errorMsg && (
           <div className="mb-8 p-4 bg-rose-950/20 border border-rose-900/40 text-rose-500 text-[10px] uppercase font-bold text-center">
@@ -148,6 +159,8 @@ export default function App() {
         <div>
           <Trophy size={100} className="text-rose-600 mx-auto mb-8" />
           <h2 className="text-6xl font-black text-white mb-4 uppercase italic">Case Solved</h2>
+          <p className="text-rose-400 mb-6 text-sm italic">Another brilliant deduction by {DETECTIVE.name}</p>
+          <p className="text-zinc-400 mb-8 text-xs max-w-md mx-auto">The finance expert's keen eye for detail and logical prowess have once again brought a killer to justice.</p>
           <button onClick={() => setGameState('menu')} className="px-12 py-4 bg-rose-800 text-white font-black uppercase tracking-widest hover:bg-rose-700">
             Next Case
           </button>
@@ -162,18 +175,25 @@ export default function App() {
         <button onClick={() => setGameState('menu')} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-zinc-500 hover:text-rose-500">
           <ArrowLeft size={16} /> Quit
         </button>
-        <span className="uppercase font-black tracking-widest text-white italic text-xs">
-          {puzzle?.title}
-        </span>
+        <div className="flex flex-col items-center">
+          <span className="uppercase font-black tracking-widest text-white italic text-xs">
+            {puzzle?.title}
+          </span>
+          <span className="text-rose-500 text-[9px] italic mt-1">Detective {DETECTIVE.name}</span>
+        </div>
         <div className="w-10" />
       </nav>
 
       <main className="max-w-7xl mx-auto p-6 lg:p-12 grid lg:grid-cols-12 gap-12">
         <div className="lg:col-span-4 space-y-6">
           <div className="bg-zinc-900/40 p-8 border-l-2 border-rose-800">
-            <h3 className="text-rose-600 font-black text-[10px] uppercase mb-6 flex items-center gap-3 tracking-[0.4em]">
-              <Fingerprint size={20} /> Dossier
+            <h3 className="text-rose-600 font-black text-[10px] uppercase mb-4 flex items-center gap-3 tracking-[0.4em]">
+              <Fingerprint size={20} /> Detective's Case Notes
             </h3>
+            <div className="mb-6 p-3 bg-rose-950/30 border-l border-rose-700">
+              <p className="text-rose-400 text-[10px] font-bold uppercase mb-1">Lead Investigator</p>
+              <p className="text-rose-300 text-xs italic">{DETECTIVE.name} - {DETECTIVE.title}</p>
+            </div>
             <p className="text-zinc-400 italic mb-8 text-sm leading-relaxed">"{puzzle?.description}"</p>
             <div className="space-y-4">
               {puzzle?.clues?.map((clue, i) => (
