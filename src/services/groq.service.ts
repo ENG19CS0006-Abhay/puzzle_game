@@ -14,18 +14,67 @@ export class GroqService {
 
   async generatePuzzle(difficulty: 'easy' | 'medium' | 'hard'): Promise<string> {
     const size = difficulty === 'easy' ? 3 : difficulty === 'medium' ? 4 : 5;
-    const prompt = `You are creating a murder mystery case for Detective Jency Infentica, a brilliant finance expert who left Wall Street to solve crimes. She has an exceptional eye for detail and logical prowess.
+    const prompt = `
+You are creating a murder mystery case for Detective Jency Infentica, a brilliant finance expert who left Wall Street to solve crimes. She has an exceptional eye for detail and logical prowess.
 
-Generate a noir murder mystery puzzle JSON.
-    Return ONLY JSON.
-    Structure: { 
-      "title": "...", 
-      "description": "...", 
-      "categories": [{"name": "Suspects", "items": [...]}, {"name": "Weapons", "items": [...]}],
-      "clues": [{"text": "..."}],
-      "solution": {"Suspects": ["Name1", "Name2"...], "Weapons": ["WeaponForName1", "WeaponForName2"...]}
+STRICT RULES:
+- Return ONLY valid JSON (no markdown, no explanation)
+- Follow the schema EXACTLY
+- All arrays must match size = ${size}
+- No missing fields
+- Keep descriptions concise but vivid
+
+SCHEMA:
+{
+  "title": "string",
+  "description": "string",
+  "categories": [
+    {
+      "name": "Suspects",
+      "items": [
+        {
+          "name": "string",
+          "alias": "string",
+          "occupation": "string",
+          "description": "string",
+          "motive": "string"
+        }
+      ]
+    },
+    {
+      "name": "Weapons",
+      "items": [
+        {
+          "name": "string",
+          "description": "string",
+          "evidence": boolean
+        }
+      ]
     }
-    Size: ${size} suspects and weapons.`;
+  ],
+  "clues": [
+    {
+      "text": "string"
+    }
+  ],
+  "solution": {
+    "Suspects": ["string"],
+    "Weapons": ["string"],
+    "Justification": "string"
+  }
+}
+
+CONSTRAINTS:
+- Exactly ${size} suspects
+- Exactly ${size} weapons
+- At least ${size} clues
+- Each suspect must have a unique motive
+- At least one weapon must have evidence=true
+- Style: noir, dark, investigative tone
+- Set in a unique location each time
+
+Generate now.
+`;
 
     const res = await this.client.chat.completions.create({
       model: 'llama-3.1-8b-instant',

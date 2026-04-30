@@ -9,6 +9,7 @@ export interface PuzzleResponse {
   difficulty: string;
   categories: any[];
   clues: any[];
+  solution: any[];
 }
 
 @Injectable()
@@ -30,6 +31,7 @@ export class PuzzleService {
         difficulty,
         categories: parsed.categories,
         clues: parsed.clues,
+        solution: parsed.solution, // Store the solution for internal use
       };
 
       // Store the solution privately
