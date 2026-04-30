@@ -37,4 +37,9 @@ export class PuzzleController {
         : 'The evidence doesn’t add up. Your deduction is flawed, Detective.',
     };
   }
+
+  @Get('health')
+  healthCheck(): { status: string } {
+    return { status: 'API is healthy and ready to serve puzzles.' };
+  }
 }
